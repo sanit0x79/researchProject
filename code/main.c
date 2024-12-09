@@ -1,5 +1,19 @@
-#include <stdio.h>
+#include <WiFi.h>
+#include "secret.h"
 
-int main()
-{
+const char* ssid = SSID;
+const char* password = PASSWORD;
+
+void setup() {
+  Serial.begin(115200);
+
+  WiFi.mode(WIFI_MODE_AP);
+  WiFi.softAP(ssid, password);
+
+  WiFi.softAPsetProtocol(WIFI_PROTOCOL_11B);   
+  Serial.print("Access Point IP Address: ");
+  Serial.println(WiFi.softAPIP());
+}
+
+void loop() {
 }
