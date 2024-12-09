@@ -1,0 +1,80 @@
+\documentclass[conference]{IEEEtran}
+
+\usepackage{graphicx} % For figures
+\usepackage{amsmath}  % For mathematical symbols
+\usepackage{lipsum}   % For filler text
+
+\begin{document}
+
+% Title
+\title{Evaluating Trade-offs in Throughput, Latency, and Power Consumption for ESP32 Access Point Configurations}
+
+% Authors
+\author{\IEEEauthorblockN{Evan Dokter}
+\IEEEauthorblockA{
+Studentnummer: 439545}
+}
+
+% Begin document
+\maketitle
+
+% Abstract
+\begin{abstract}
+This research investigates the trade-offs in throughput, latency, and power consumption for an ESP32 configured as an access point in different Wi-Fi modes (802.11b, 802.11g, and 802.11n). By analyzing experimental results, the study provides insights into the optimal configurations for varying application requirements, emphasizing practical applications in IoT systems.
+\end{abstract}
+
+% Keywords
+\begin{IEEEkeywords}
+ESP32, Wi-Fi, Access Point, Throughput, Latency, Power Consumption, IoT
+\end{IEEEkeywords}
+
+\section{Introductie}
+The ESP32 is a popular microcontroller used in IoT applications due to its low cost, versatility, and built-in Wi-Fi capabilities. This paper evaluates its performance as an access point, focusing on key metrics such as throughput, latency, and power consumption when configured in various Wi-Fi modes. \lipsum[1-2]
+
+\section{Achtergrond}
+Wi-Fi modes (802.11b, g, and n) differ in terms of maximum throughput, range, and power efficiency. \lipsum[3-4]
+
+\section{Methodes}
+\subsection{Hardware Setup}
+The experiment uses an ESP32 board, a USB power meter, and a laptop running `iperf` for throughput and latency testing. \lipsum[5]
+
+\subsection{Wi-Fi Configuratie}
+The ESP32 is programmed using Arduino IDE, and its Wi-Fi protocol is set using the \texttt{WiFi.softAPsetProtocol()} function. The power consumption is measured during idle and data transfer states. \lipsum[6]
+
+\section{Resultaten en Analyse}
+\subsection{Throughput}
+The throughput for each mode was measured using `iperf`. Figure~\ref{fig:throughput} shows the results. \lipsum[7]
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\columnwidth]{example.png} % Replace with your figure
+    \caption{Throughput comparison across Wi-Fi modes.}
+    \label{fig:throughput}
+\end{figure}
+
+\subsection{Latency}
+Ping tests reveal varying round-trip times (RTTs) for each mode. \lipsum[8]
+
+\subsection{Power Consumption}
+Figure~\ref{fig:power} depicts power usage for each Wi-Fi mode. \lipsum[9]
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\columnwidth]{example2.png} % Replace with your figure
+    \caption{Power consumption comparison across Wi-Fi modes.}
+    \label{fig:power}
+\end{figure}
+
+\section{Discussie}
+The trade-offs in throughput, latency, and power consumption highlight that the optimal mode depends on application requirements. \lipsum[10-12]
+
+\section{Conclusie}
+This study provides a detailed analysis of the ESP32's performance as an access point in different Wi-Fi modes. Future work may explore dynamic mode switching to optimize performance based on network conditions. \lipsum[13]
+
+\begin{thebibliography}{1}
+\bibitem{ref1} A. Author, ``Title of the paper,'' \emph{Journal Name}, vol. X, no. Y, pp. 1--10, Year.
+
+\bibitem{ref2} B. Author, \emph{Title of the Book}. Publisher, Year.
+\end{thebibliography}
+
+\end{document}
