@@ -1,45 +1,74 @@
 \documentclass[conference]{IEEEtran}
 
-\usepackage{graphicx} % For figures
-\usepackage{amsmath}  % For mathematical symbols
-\usepackage{lipsum}   % For filler text
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{lipsum}
+\usepackage{xcolor}
+\usepackage{listings}
+
+\definecolor{mGreen}{rgb}{0,0.6,0}
+\definecolor{mGray}{rgb}{0.5,0.5,0.5}
+\definecolor{mPurple}{rgb}{0.58,0,0.82}
+\definecolor{backgroundColour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{CStyle}{
+    backgroundcolor=\color{backgroundColour},   
+    commentstyle=\color{mGreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{mGray},
+    stringstyle=\color{mPurple},
+    basicstyle=\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2,
+    language=C
+}
+
 
 \begin{document}
 
-% Title
-\title{Evaluating Trade-offs in Throughput, Latency, and Power Consumption for ESP32 Access Point Configurations}
+\title{Evaluatie van trade-offs in throughput, latency en stroomverbruik voor ESP8266-accesspoint configuraties}
 
-% Authors
 \author{\IEEEauthorblockN{Evan Dokter}
 \IEEEauthorblockA{
 Studentnummer: 439545}
 }
 
-% Begin document
 \maketitle
 
-% Abstract
 \begin{abstract}
-This research investigates the trade-offs in throughput, latency, and power consumption for an ESP32 configured as an access point in different Wi-Fi modes (802.11b, 802.11g, and 802.11n). By analyzing experimental results, the study provides insights into the optimal configurations for varying application requirements, emphasizing practical applications in IoT systems.
+This research investigates the trade-offs in throughput, latency, and power consumption for an ESP8266 configured as an access point in different Wi-Fi modes (802.11b, 802.11g, and 802.11n). By analyzing experimental results, the study provides insights into the optimal configurations for varying application requirements, emphasizing practical applications in IoT systems.
 \end{abstract}
 
-% Keywords
-\begin{IEEEkeywords}
-ESP32, Wi-Fi, Access Point, Throughput, Latency, Power Consumption, IoT
-\end{IEEEkeywords}
-
 \section{Introductie}
-The ESP32 is a popular microcontroller used in IoT applications due to its low cost, versatility, and built-in Wi-Fi capabilities. This paper evaluates its performance as an access point, focusing on key metrics such as throughput, latency, and power consumption when configured in various Wi-Fi modes. \lipsum[1-2]
+Internet of Things (IoT) is de snelst groeiende technologie van de afgelopen paar jaar. (Brij et al., 2024) Hierdoor is er een toenemende vraag naar efficiënte, betaalbare en veelzijdige netwerkinfrastructuren. De ESP8266, een goedkope en krachtige microcontroller met ingebouwde Wi-Fi-functionaliteit, biedt een aantrekkelijke oplossing voor uiteenlopende IoT-toepassingen. Dankzij de ondersteuning voor verschillende Wi-Fi-modi, waaronder 802.11b, 802.11g en 802.11n, kan de ESP8266 worden geconfigureerd als een access point (AP) om een lokaal netwerk op te zetten zonder dat een externe router nodig is.
+
+Hoewel de veelzijdigheid van de ESP8266 goed gedocumenteerd is, ontbreekt er specifiek onderzoek naar de prestatieverschillen tussen de beschikbare Wi-Fi-modi. Elke Wi-Fi-modus heeft unieke eigenschappen die van invloed zijn op throughput, latency en stroomverbruik (Banerji \& Chowdhury, 2013) — drie kritische factoren bij de keuze voor IoT-implementaties. Bijvoorbeeld, 802.11b biedt een grotere dekking, maar heeft een lagere doorvoersnelheid, terwijl 802.11n aanzienlijk sneller is (Banerji \& Chowdhury, 2013), maar mogelijk meer energie verbruikt. Begrip van deze trade-offs is essentieel voor ontwikkelaars die de ESP8266 willen inzetten in energiebeperkte en prestatiekritische omgevingen.
+
+In dit onderzoek wordt onderzocht hoe de ESP8266 presteert als access point in verschillende Wi-Fi-modi. Door experimentele metingen van throughput, latency en stroomverbruik te analyseren, biedt dit werk inzicht in de impact van de configuratie op de prestaties. Het doel is om praktische aanbevelingen te doen voor het optimaal configureren van de ESP8266 als access point, afhankelijk van specifieke gebruiksscenario's. 
 
 \section{Achtergrond}
-Wi-Fi modes (802.11b, g, and n) differ in terms of maximum throughput, range, and power efficiency. \lipsum[3-4]
+Met de opkomst van draadloze technologieën is het toegankelijk maken van netwerken door middel van goedkope, veelzijdige microcontrollers zoals de ESP8266 een belangrijk onderzoeksonderwerp geworden. De ESP8266, bekend om zijn ingebouwde Wi-Fi-functionaliteit, biedt mogelijkheden om kleine, draagbare toegangspunten (Access Points, AP) te creëren. Dit is bijzonder relevant in toepassingen zoals IoT-netwerken, lokale draadloze communicatie, en experimentele netwerkinstallaties.
+
+Het doel van dit onderzoek is om de functionaliteit en prestaties van de ESP8266 als draadloos toegangspunt te evalueren. Hierbij wordt gekeken naar het opzetten van een eenvoudig netwerk, waarbij de microcontroller dienstdoet als AP en informatie zoals het IP-adres en de gebruikte Wi-Fi-modus op een ingebouwd OLED-display wordt weergegeven. Dit sluit aan bij de bredere vraag hoe microcontrollers zoals de ESP8266 kunnen worden ingezet in draadloze communicatieomgevingen met beperkte hardwarecapaciteit.
+
+Eerdere projecten en documentatie tonen aan dat de ESP8266 betrouwbaar kan functioneren in 802.11b/g/n-modi, hoewel er beperkingen zijn in het wijzigen van Wi-Fi-protocollen tijdens gebruik. Het weergeven van de netwerkstatus op een OLED-scherm, dat via I2C wordt aangestuurd, biedt een praktische en visuele feedbackmogelijkheid voor gebruikers. Dit onderzoek bouwt verder op bestaande kennis door zowel het opzetten van het toegangspunt als het combineren van deze functionaliteit met een real-time visuele weergave op het display.
+
+Het achterliggende probleem is het vinden van een balans tussen draadloze prestaties en beperkte systeembronnen (zoals geheugen en rekencapaciteit) van microcontrollers zoals de ESP8266. Dit onderzoek biedt daarmee inzicht in de praktische inzetbaarheid van de ESP8266 voor draadloze toepassingen en stelt mogelijkheden voor verdere uitbreiding naar complexere netwerktopologieën of hardware-oplossingen. 
 
 \section{Methodes}
 \subsection{Hardware Setup}
-The experiment uses an ESP32 board, a USB power meter, and a laptop running `iperf` for throughput and latency testing. \lipsum[5]
+Dit experiment maakt gebruik van een ESP8266-board, een USB-stroommeter en een laptop waarop 'iperf' wordt gebruikt voor latency- en throughputtesting.
 
 \subsection{Wi-Fi Configuratie}
-The ESP32 is programmed using Arduino IDE, and its Wi-Fi protocol is set using the \texttt{WiFi.softAPsetProtocol()} function. The power consumption is measured during idle and data transfer states. \lipsum[6]
+ De ESP8266 is geprogrammeerd met gebruik van de Arduino IDE, het wi-fi-protocol wordt ingesteld door de functie: \texttt{WiFi.softAPsetProtocol()}. Het stroomverbruik wordt gemeten tijdens een idle-situatie en datatransfersituaties.  
 
 \section{Resultaten en Analyse}
 \subsection{Throughput}
@@ -47,34 +76,90 @@ The throughput for each mode was measured using `iperf`. Figure~\ref{fig:through
 
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=\columnwidth]{example.png} % Replace with your figure
+    \includegraphics[width=\columnwidth]{example.png}
     \caption{Throughput comparison across Wi-Fi modes.}
     \label{fig:throughput}
 \end{figure}
 
 \subsection{Latency}
-Ping tests reveal varying round-trip times (RTTs) for each mode. \lipsum[8]
+Ping tests reveal varying round-trip times (RTTs) for each mode. RTT wordt berekend met de formule:
+\[
+\text{Average RTT} = \frac{\text{RTT}_1 + \text{RTT}_2 + \dots + \text{RTT}_n}{n}
+\]
+waarbij: \\
+\(\text{RTT}_1, \text{RTT}_2, \dots, \text{RTT}_n\) de individuele metingen zijn, en \(n\) het totaal aantal metingen is. \\
 
+Latency wordt berekend met de formule:
+\[
+\text{Latency (ms)} = \frac{\text{RTT (ms)}}{2}
+\]
 \subsection{Power Consumption}
-Figure~\ref{fig:power} depicts power usage for each Wi-Fi mode. \lipsum[9]
+Figure~\ref{fig:power} geeft het energieverbruik voor elke Wi-Fi-modus weer. \lipsum[9]
 
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=\columnwidth]{example2.png} % Replace with your figure
+    \includegraphics[width=\columnwidth]{example2.png}
     \caption{Power consumption comparison across Wi-Fi modes.}
     \label{fig:power}
 \end{figure}
+
+\subsection{Code Used}
+Voor het onderzoek is er code geschreven voor het instellen van de ESP als AP, en om deze te kunnen wisselen van protocol met een klik op een fysieke knop. In de volgende figuur staat deze code, geschreven in de programmeertaal C/C++, getoond. In de figuur staan voornamelijk de belangrijkste delen van de code weergegeven.
+\newpage
+\begin{lstlisting}[style=CStyle]
+#include <Wire.h>
+#include <Adafruit_SSD1306.h>
+#include <ESP8266WiFi.h>
+
+#define SCREEN_WIDTH 128  // OLED display width, in pixels
+#define SCREEN_HEIGHT 64 // OLED display height, in pixels
+
+#define OLED_RESET    -1   // Reset pin 
+#define SCREEN_ADDRESS 0x3C
+
+#define OLED_SDA 14  // D2 (GPIO4)
+#define OLED_SCL 12  // D1 (GPIO5)
+
+// SSID and PASSWORD for the AP
+const char* ssid = "SSID";  // Replace with your desired SSID
+const char* password = "PASSWORD";  // Replace with your desired password
+Adafruit_SSD1306 *display;
+int c = 0;
+
+void handle_oled(int c, const char* mode) {
+// in this struct the OLED handler is set-up
+}
+
+void setup() {
+  Serial.begin(115200);
+  
+  display = new Adafruit_SSD1306(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
+  Wire.begin(OLED_SDA, OLED_SCL);
+  display->begin(SSD1306_SWITCHCAPVCC, SCREEN_ADDRESS);
+
+  WiFi.mode(WIFI_AP);
+  WiFi.softAP(ssid, password);
+
+  delay(1000);
+
+  Serial.print("Access Point IP Address: ");
+  Serial.println(WiFi.softAPIP());
+
+  WiFi.setPhyMode(WIFI_PHY_MODE_11B); // Set PHY mode to 802.11b (other options: WIFI_PHY_MODE_G, WIFI_PHY_MODE_N)
+}
+\end{lstlisting}
 
 \section{Discussie}
 The trade-offs in throughput, latency, and power consumption highlight that the optimal mode depends on application requirements. \lipsum[10-12]
 
 \section{Conclusie}
-This study provides a detailed analysis of the ESP32's performance as an access point in different Wi-Fi modes. Future work may explore dynamic mode switching to optimize performance based on network conditions. \lipsum[13]
+This study provides a detailed analysis of the ESP8266's performance as an access point in different Wi-Fi modes. Future work may explore dynamic mode switching to optimize performance based on network conditions. \lipsum[13]
 
 \begin{thebibliography}{1}
-\bibitem{ref1} A. Author, ``Title of the paper,'' \emph{Journal Name}, vol. X, no. Y, pp. 1--10, Year.
+\bibitem{ref1} Brij, B., Sharma, Manimaran, A., \& Rani, S. (2024). FUTURE RESEARCH ON INTERNET OF THINGS (IOT) AND IT’S APPLICATIONS. ResearchGate. https://doi.org/10.5281/zenodo.777818
 
-\bibitem{ref2} B. Author, \emph{Title of the Book}. Publisher, Year.
+\bibitem{ref2} Banerji, S., \& Chowdhury, R. S. (2013). On IEEE 802.11: Wireless Lan Technology. International Journal of Mobile Network Communications \& Telematics, 3(4), 45–64. https://doi.org/10.5121/ijmnct.2013.3405
 \end{thebibliography}
 
 \end{document}
+
