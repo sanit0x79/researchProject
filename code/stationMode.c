@@ -4,13 +4,13 @@
 
 #define SCREEN_WIDTH 128
 #define SCREEN_HEIGHT 64   
-#define OLED_RESET    -1  
+#define OLED_RESET -1  
 #define SCREEN_ADDRESS 0x3C 
 
 #define OLED_SDA 14  
 #define OLED_SCL 12 
 
-const char* ssid = "ssid name here";   
+const char* ssid = "ssid here";   
 const char* password = "password here";   
 
 Adafruit_SSD1306* display;
