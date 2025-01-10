@@ -10,8 +10,8 @@
 #define OLED_SDA 14  
 #define OLED_SCL 12 
 
-const char* ssid = "ssid name here";   
-const char* password = "password here";   
+const char* ssid = "pixel1234";   
+const char* password = "test1234";   
 
 Adafruit_SSD1306* display;
 int c = 0;
@@ -23,13 +23,11 @@ void handle_oled(int counter, const char* mode) {
   display->setCursor(0, 0);
 
   display->print("SSID: ");
-  display->println(ssid);
+  display->println("ResearchESP");
 
   display->print("IP:   ");
-  display->println(WiFi.localIP());
+  display->println("192.168.4.1");
 
-  display->print("MODE: ");
-  display->println(mode);
 
   display->display();
 }

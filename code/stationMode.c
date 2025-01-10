@@ -10,8 +10,8 @@
 #define OLED_SDA 14  
 #define OLED_SCL 12 
 
-const char* ssid = "ssid here";   
-const char* password = "password here";   
+const char* ssid = "pixel1234";   
+const char* password = "test1234";   
 
 Adafruit_SSD1306* display;
 int c = 0;
