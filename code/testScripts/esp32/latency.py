@@ -2,8 +2,8 @@ import subprocess
 import csv
 import re
 
-targetIp = '192.168.4.3'  # Replace with the IP address of the other device
-pingCount = 100
+targetIp = '192.168.4.2'  # Replace with the IP address of the other device
+pingCount = 50
 csvFileName = 'latencyResults.csv'  # Renamed to avoid conflict
 
 def testLatency():

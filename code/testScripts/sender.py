@@ -1,37 +1,65 @@
 import socket
 import time
+import csv
 
-receiverIp = '192.168.4.2'  # Replace with your receiver's IP address
-udpPort = 5005
-packetSize = 1024  # Size of each packet in bytes
-testDuration = 10  # Duration of the test in seconds
+SERVER_IP = "192.168.4.3"  # Replace with the server's IP address
+UDP_PORT = 5005
+PACKET_SIZE = 1024
+REPEAT_COUNT = 10
+CSV_FILE = "download_speed_results.csv"
 
-def runSender():
-    print("Starting UDP Sender...")
+def run_client():
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    sock.settimeout(10)
 
-    # Send START signal
-    sock.sendto(b'START', (receiverIp, udpPort))
-    print("Sent START signal.")
+    total_speeds = []
 
-    totalBytes = 0
-    endTime = time.time() + testDuration
+    # Open the CSV file for writing
+    with open(CSV_FILE, "w", newline="") as csvfile:
+        csv_writer = csv.writer(csvfile)
+        csv_writer.writerow(["TestNumber", "DownloadSpeedMbps"])  # Header row
 
-    while time.time() < endTime:
-        data = b'a' * packetSize
-        sock.sendto(data, (receiverIp, udpPort))
-        totalBytes += len(data)
+        for i in range(REPEAT_COUNT):
+            print(f"Starting file download {i+1}/{REPEAT_COUNT}...")
+            sock.sendto(b"START", (SERVER_IP, UDP_PORT))  # Request file
 
-    # Send END signal
-    sock.sendto(b'END', (receiverIp, udpPort))
-    print("Sent END signal.")
+            start_time = time.time()
+            total_bytes = 0
 
-    elapsedTime = testDuration
-    throughputMbps = (totalBytes * 8) / (elapsedTime * 1_000_000)
+            while True:
+                try:
+                    data, addr = sock.recvfrom(PACKET_SIZE)
+                    if data == b"END":
+                        break
+                    total_bytes += len(data)
+                except socket.timeout:
+                    print("Timeout occurred!")
+                    break
 
-    print(f"Total Bytes Sent: {totalBytes} bytes")
-    print(f"Elapsed Time: {elapsedTime:.2f} seconds")
-    print(f"Throughput: {throughputMbps:.2f} Mbps")
+            end_time = time.time()
+            elapsed_time = end_time - start_time
+
+            if elapsed_time > 0:
+                speed_mbps = (total_bytes * 8) / (elapsed_time * 1_000_000)
+                total_speeds.append(speed_mbps)
+                print(f"Download {i+1}: {speed_mbps:.2f} Mbps")
+
+                # Save this iteration's result to the CSV
+                csv_writer.writerow([i + 1, speed_mbps])
+
+    # Calculate average speed
+    if total_speeds:
+        avg_speed = sum(total_speeds) / len(total_speeds)
+        print(f"\nAverage Download Speed: {avg_speed:.2f} Mbps")
+
+        # Save the average to the CSV
+        with open(CSV_FILE, "a", newline="") as csvfile:
+            csv_writer = csv.writer(csvfile)
+            csv_writer.writerow([])
+            csv_writer.writerow(["Average", avg_speed])
+    else:
+        print("No valid downloads recorded.")
 
 if __name__ == "__main__":
-    runSender()
+    run_client()
+
